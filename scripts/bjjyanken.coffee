@@ -1,8 +1,8 @@
 # Description:
-#   ミサワ　ネタ
+#   美女じゃんけん
 #
 # Commands:
-#   hubot まだある - get ミサワ ネタ
+#   hubot じゃんけん {ぐー|ちょき|ぱー}
 
 module.exports = (robot) ->
   robot.respond /じゃんけん[ |　](.*)/i, (msg) ->
