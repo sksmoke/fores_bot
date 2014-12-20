@@ -23,8 +23,11 @@
 #   hubot 聞いてよ - get 美女 ネタ
 
 module.exports = (robot) ->
- robot.respond /aaa$/i, (msg) ->
-   # msg.send "http://dawa.up.d.seesaa.net/dawa/image/necha.jpg
+ 	
+ 	robot.respond /aaa$/i, (msg) ->
+	msg.send "test"
+
+   	# msg.send "http://dawa.up.d.seesaa.net/dawa/image/necha.jpg"
 
    query = msg.match[2]
    robot.http("http://ap.mextractr.net/ma9/emotion_analyzer")
