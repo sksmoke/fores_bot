@@ -25,5 +25,8 @@
 module.exports = (robot) ->
   robot.respond /xxx$/i, (msg) ->
     msg.send "PONGPONGPONG"
+    msg.send "PONGPONGPONG"
+    msg.send "PONGPONGPONG"
+    msg.send "PONGPONGPONG"
 
     process.exit 0
