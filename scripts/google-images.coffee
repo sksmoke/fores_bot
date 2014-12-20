@@ -6,6 +6,9 @@
 #   hubot animate me <query> - The same thing as `image me`, except adds a few parameters to try to return an animated GIF instead.
 #   hubot mustache me <url> - Adds a mustache to the specified URL.
 #   hubot mustache me <query> - Searches Google Images for the specified query and mustaches it.
+#   hubot iy <query> - Extention Yakyu
+#   hubot is <query> - Extention Sakka-
+#   大谷 - Extention 大谷特別版
 
 module.exports = (robot) ->
   robot.respond /(image|img)( me)? (.*)/i, (msg) ->
@@ -26,6 +29,19 @@ module.exports = (robot) ->
     else
       imageMe msg, imagery, false, true, (url) ->
         msg.send "#{mustachify}#{url}"
+
+#Extentions 
+  robot.respond /(iy|is) (.*)/i, (msg) ->
+    exSerchType = ""
+    if msg.match[1] == "iy" then exSerchType = "野球"
+    else if msg.match[1] == "sy" then exSerchType = "サッカー"
+    imageMe msg, msg.match[2] + " " + exSerchType, (url) ->
+      msg.send url
+
+  robot.hear /(.*)大谷(.*)/i, (msg) ->
+    imageMe msg, "大谷翔平", (url) ->
+      msg.send url
+#Extentions End
 
 imageMe = (msg, query, animated, faces, cb) ->
   cb = animated if typeof animated == 'function'
