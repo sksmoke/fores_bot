@@ -46,5 +46,6 @@ module.exports = (robot) ->
        else
          endmessage = 2
        #その他
-    msg.send "#{imageUrl[botHandType]} #{handType[botHandType]} #{endMessages[endmessage]}"
+    randparam = Math.random()
+    msg.send "#{imageUrl[botHandType]}?#{randparam} #{handType[botHandType]} #{endMessages[endmessage]}"
 
