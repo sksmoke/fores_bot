@@ -21,7 +21,7 @@ module.exports = (robot) ->
       msg.send "#{elapseTime}分経過しました。"
       if elapseTime == 5
         url = msg.random END_URL
-        msg.send "終了です。\n#{url}?dummy=" + new Date().getTime()
+        msg.send "終了です。\n#{url}?" + new Date().getTime()
         clearInterval intervalId
     , 60 * 1000
 
