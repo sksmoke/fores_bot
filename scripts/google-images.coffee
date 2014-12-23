@@ -34,7 +34,7 @@ module.exports = (robot) ->
   robot.respond /(iy|is) (.*)/i, (msg) ->
     exSerchType = ""
     if msg.match[1] == "iy" then exSerchType = "野球"
-    else if msg.match[1] == "sy" then exSerchType = "サッカー"
+    else if msg.match[1] == "is" then exSerchType = "サッカー"
     imageMe msg, msg.match[2] + " " + exSerchType, (url) ->
       msg.send url
 
