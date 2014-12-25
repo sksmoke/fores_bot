@@ -11,7 +11,7 @@
 #   hubot 聞いてよ - get 美女 ネタ
 
 module.exports = (robot) ->
-  robot.respond /聞いてよ (.*)/i, (msg) ->
+  robot.respond /聞いてよ\s(.*)/i, (msg) ->
     query = msg.match[1]
     robot.http("http://ap.mextractr.net/ma9/emotion_analyzer")
       .query({
@@ -33,7 +33,7 @@ module.exports = (robot) ->
             })
             .get() (err, res, bjinbody) ->
               jbjinbody = JSON.parse(bjinbody)
-              msg.send jbjinbody[0].thumb
+              msg.send "http://bjin.me/images/pic" + jbjinbody[0].ID + ".jpg"
               msg.send "ぅωぅω"
         else
          robot.http("http://bjin.me/api/")
@@ -44,5 +44,5 @@ module.exports = (robot) ->
           })
           .get() (err, res, bbjinbody) ->
                   jbbjinbody = JSON.parse(bbjinbody)
-                  msg.send jbbjinbody[0].thumb
+                  msg.send "http://bjin.me/images/pic" + jbjinbody[0].ID + ".jpg"
                   msg.send "け〃ωきた〃Ｕτ"
