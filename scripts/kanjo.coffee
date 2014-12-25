@@ -33,7 +33,7 @@ module.exports = (robot) ->
             })
             .get() (err, res, bjinbody) ->
               jbjinbody = JSON.parse(bjinbody)
-              msg.send "http://bjin.me/images/pic" + jbjinbody[0].ID + ".jpg"
+              msg.send "http://bjin.me/images/pic" + jbjinbody[0].id + ".jpg"
               msg.send "ぅωぅω"
         else
          robot.http("http://bjin.me/api/")
@@ -44,5 +44,5 @@ module.exports = (robot) ->
           })
           .get() (err, res, bbjinbody) ->
                   jbbjinbody = JSON.parse(bbjinbody)
-                  msg.send "http://bjin.me/images/pic" + jbjinbody[0].ID + ".jpg"
+                  msg.send "http://bjin.me/images/pic" + jbjinbody[0].id + ".jpg"
                   msg.send "け〃ωきた〃Ｕτ"
