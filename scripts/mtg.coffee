@@ -17,6 +17,7 @@ module.exports = (robot) ->
     url = "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=visual&action=advanced&name=+[" + cardName + "]"
     msg.send url
     robot.http(url)
+      .header('Accept-Language', 'ja,en-us;q=0.7,en;q=0.3')
       .get() (err, res, body) ->
         $ = cheerio.load body
         imgs = $('.visualspoiler img')
