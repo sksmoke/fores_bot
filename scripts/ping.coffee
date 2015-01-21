@@ -18,7 +18,14 @@ module.exports = (robot) ->
     msg.send msg.match[1]
 
   robot.respond /TIME$/i, (msg) ->
-    msg.send "Server time is: #{new Date()}"
+    places = [ 'jp', 'taiwan', 'hawaii', 'thailand'] #, 'binan' 
+    place = places[Math.floor(Math.random() * places.length)]
+    d = new Date
+    hour = ('0' + d.getHours()).slice(-2)
+    minute = ('0' + d.getMinutes()).slice(-2)
+    img = "http://www.bijint.com/" + place + "/tokei_images/" + hour + minute + ".jpg"
+    msg.send img
+    msg.finish()
 
   robot.respond /DIE$/i, (msg) ->
     msg.send "Goodbye, cruel world."
