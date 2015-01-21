@@ -22,7 +22,11 @@ module.exports = (robot) ->
 
 	robot.hear /(.*)ちくわ(.*)/i, (msg) ->
 		imageTiqav msg, "http://blog-imgs-60.fc2.com/h/i/r/hirofumi1623jp/be97a404.jpg?"
-		
+
+	robot.hear /.*/i, (msg) ->
+		chatDialogue msg,15
+
+
 imageTiqav = (msg, drowUrl) ->
 	msg.http('http://api.tiqav.com/search.json?q='+msg)
 		.query({
@@ -38,3 +42,26 @@ imageTiqav = (msg, drowUrl) ->
 				msg.send "http://img.tiqav.com/" + jbody[idrnd].id + ".jpg?" + mrs
 			else
 				msg.send drowUrl + mrs
+				
+chatDialogue = (msg, num) =>
+	rnd = Math.floor(Math.random() * num) + 1
+	if rnd < 2
+		message = msg.match[0]
+		msg.http('https://api.apigw.smt.docomo.ne.jp/dialogue/v1/dialogue')
+		.query({
+			format: 'json'
+			APIKEY: '722f576273444b784b346d783737317371644f41676b376a4879587835344f6262586f38377930786d4a41'
+		})
+		.post(JSON.stringify({ utt: message })) (err, _, body) ->
+			if err?
+				robot.logger.error e
+				msg.send 'docomo-dialogue: error'
+			else
+				msg.send JSON.parse(body).utt
+				
+getTimeDiffAsMinutes = (old_msec) ->
+	now = new Date()
+	old = new Date(old_msec)
+	diff_msec = now.getTime() - old.getTime()
+	diff_minutes = parseInt( diff_msec / (60*1000), 10 )
+	return diff_minutes
