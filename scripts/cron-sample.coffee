@@ -6,7 +6,7 @@ moment = require 'moment-timezone'
 
 module.exports = (robot) ->
   new cron '0 * * * * 1-5', () ->
-    rnd = Math.floor(Math.random() * 40) + 1
+    rnd = Math.floor(Math.random() * 720) + 1
     if rnd < 3
       places = [ 'jp', 'taiwan', 'hawaii', 'thailand'] #, 'binan' 
       place = places[Math.floor(Math.random() * places.length)]

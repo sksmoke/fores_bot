@@ -1,18 +1,26 @@
-# mtg.coffee
-# MTG検索APIからのスクレイピング
+# Description:
+#   http://gatherer.wizards.com/Pages/Search/Default.aspx
+#
+# Commands:
+#   hubot search <text> - カード検索コマンド
+#   hubot help - ヘルプ
 cheerio = require 'cheerio'
 helpText = (name) ->
   """
-  Hubot x Magic The Gathering
-  ---
-  #{name} mtg search [cardName]     カード検索コマンド。ブラウザだと日本語いけるけどここからじゃ無理ぽ(´；ω；｀)ﾌﾞﾜｯ
+  ---- - --- ----- - --- ----- - ---
+  #{name} x Magic The Gathering
+  - --- ----- - --- ----- - --- ----
+
+  #{name} mtg search [cardName]     カード検索コマンド。
+
   #{name} mtg help                  ヘルプ。
+
   """
 module.exports = (robot) ->
   robot.respond /mtg\s*search\s*(.*)?$/i, (msg) ->
     cardName = msg.match[1]
     if !cardName?
-      msg.send "#{robot.name} mtg search [cardName]"
+      msg.send helpText robot.name
       return
     url = "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=visual&action=advanced&name=+[" + cardName + "]"
     msg.send url
@@ -25,7 +33,9 @@ module.exports = (robot) ->
           msg.send '見つからないからこれでも見とけ！'
           msg.send 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=332848&type=card'
           return
-        for img in imgs
+        for img, i in imgs
+          if i >= 5
+            return
           msg.send 'http://gatherer.wizards.com' + $(img).attr('src').substr(5)
   robot.respond /mtg\s*(.*)?$/i, (msg) ->
     action = msg.match[1]
