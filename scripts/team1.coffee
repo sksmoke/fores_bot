@@ -39,9 +39,9 @@ imageTiqav = (msg, drowUrl) ->
 			rnd = Math.floor(Math.random() * 2) + 1
 			mrs = Math.random().toString()
 			if rnd > 1
-				msg.send "http://img.tiqav.com/" + jbody[idrnd].id + ".jpg?" + mrs
+				msg.send {room: '#bot_test'}, "http://img.tiqav.com/" + jbody[idrnd].id + ".jpg?" + mrs
 			else
-				msg.send drowUrl + mrs
+				msg.send {room: '#bot_test'}, drowUrl + mrs
 				
 chatDialogue = (msg, num) =>
 	rnd = Math.floor(Math.random() * num) + 1
@@ -55,9 +55,9 @@ chatDialogue = (msg, num) =>
 		.post(JSON.stringify({ utt: message })) (err, _, body) ->
 			if err?
 				robot.logger.error e
-				msg.send 'docomo-dialogue: error'
+				msg.send {room: '#bot_test'}, 'docomo-dialogue: error'
 			else
-				msg.send JSON.parse(body).utt
+				msg.send {room: '#bot_test'}, JSON.parse(body).utt
 				
 getTimeDiffAsMinutes = (old_msec) ->
 	now = new Date()
