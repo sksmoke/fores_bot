@@ -14,8 +14,8 @@ module.exports = (robot) ->
 	robot.hear /(.*)ずるい(.*)/i, (msg) ->
 		imageTiqav msg, "http://livedoor.blogimg.jp/nana_news/imgs/d/8/d833bce9.jpg?"
 
-	robot.hear /(.*)おは(.*)/i, (msg) ->
-		msg.send msg.random ["おっはー", "おはよ", "おはよーさま"]
+	robot.hear /(.*)ぬる|Null|null(.*)/i, (msg) ->
+		imageTiqav msg, "http://www.sisimaru.com/media/1/20060221-SafariScreenSnapz003.jpg?"
 
 	robot.hear /(.*)言う(.*)/i, (msg) ->
 		imageTiqav msg, "http://livedoor.blogimg.jp/nana_news/imgs/9/b/9b3176a7.jpg?"
@@ -24,7 +24,7 @@ module.exports = (robot) ->
 		imageTiqav msg, "http://blog-imgs-60.fc2.com/h/i/r/hirofumi1623jp/be97a404.jpg?"
 
 	robot.hear /.*/i, (msg) ->
-		chatDialogue msg,15
+		chatDialogue msg, 3000
 
 
 imageTiqav = (msg, drowUrl) ->
@@ -54,7 +54,6 @@ chatDialogue = (msg, num) =>
 		})
 		.post(JSON.stringify({ utt: message })) (err, _, body) ->
 			if err?
-				robot.logger.error e
 				msg.send {room: '#bot_test'}, 'docomo-dialogue: error'
 			else
 				msg.send {room: '#bot_test'}, JSON.parse(body).utt
