@@ -239,7 +239,7 @@ moment = require 'moment-timezone'
 
 module.exports = (robot) ->
     new cron '0 * * * * 1-5', () ->
-        rnd = Math.floor(Math.random() * 300) + 1
+        rnd = Math.floor(Math.random() * 7200) + 1
         cropAdventFlg = robot.brain.get CROP_ADVENT_FLG ? false
         if rnd < 10 && cropAdventFlg == false
             setCrop robot
@@ -310,7 +310,7 @@ setUserPoint = (uIndex, getNum, robot) ->
         uPoint = robot.brain.get(uIndex + USER_POINT) ? 0
     
         robot.brain.set(CROP_REST_NUM, cropNum - getNum)
-        #robot.brain.set CROP_LAST_GET_USER uIndex
+        robot.brain.set CROP_LAST_GET_USER uIndex
         robot.brain.set(uIndex + USER_POINT, uPoint + Math.floor(getNum * cropPrice))
         
         robot.send {room: '#bot_test'}, cropName + 'を、' + getNum + '個収穫しました。'
