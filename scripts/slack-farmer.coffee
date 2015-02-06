@@ -246,8 +246,8 @@ module.exports = (robot) ->
         if rnd < 2 && cropAdventFlg == true
             endHarvestCrop robot
 
- #   robot.respond /sftes/i, (msg) ->
- #       setCrop robot
+    robot.respond /sftes/i, (msg) ->
+        setCrop robot
 
     robot.respond /sfget/i, (msg) ->
         harvestCrop robot, msg
