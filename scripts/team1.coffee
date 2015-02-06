@@ -28,6 +28,9 @@ module.exports = (robot) ->
 
 
 imageTiqav = (msg, drowUrl) ->
+	room = msg.message.user.room
+	if room == 'general'
+		return
 	msg.http('http://api.tiqav.com/search.json?q='+msg)
 		.query({
 			format: 'json'
@@ -45,6 +48,9 @@ imageTiqav = (msg, drowUrl) ->
 				
 chatDialogue = (msg, num) =>
 	rnd = Math.floor(Math.random() * num) + 1
+	room = msg.message.user.room
+	if room == 'general'
+		return
 	if rnd < 2
 		message = msg.match[0]
 		msg.http('https://api.apigw.smt.docomo.ne.jp/dialogue/v1/dialogue')
