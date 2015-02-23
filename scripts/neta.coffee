@@ -10,6 +10,16 @@
 # Commands:
 #   hubot あきらめたら,それだ,まだ,夢,悪い予感,それより,？？？,専門外,ダメっぽい,本題,たやすい,呼んだ,次は,不運,タブー,もう十分,火,欲しい,ふあー,殺,いつもの,古い,りくつ,あほか,無駄な時間 - get ネタ
 
+TIKUWA_URL = ["http://blog-imgs-60.fc2.com/h/i/r/hirofumi1623jp/be97a404.jpg?",
+           "http://blog-imgs-29-origin.fc2.com/i/w/a/iwainohondana/200906262154138cf.jpg?",
+           "http://blog-imgs-50.fc2.com/a/p/g/apg/201211130.png?",
+           "http://livedoor.blogimg.jp/kanriliveid11-kotematomesokuho/imgs/1/7/1747a487.jpg?",
+           "http://pds.exblog.jp/pds/1/201110/25/85/f0099085_1271974.gif?",
+           "http://blog-imgs-36.fc2.com/a/p/g/apg/201301159.jpg?",
+           "http://img.f.hatena.ne.jp/images/fotolife/t/tanakatan/20071216/20071216200517.jpg?",
+           "http://30.media.tumblr.com/tumblr_l9bto0APsd1qa2hcyo1_400.jpg?",
+           "http://diarynote.jp/data/blogs/l/20100903/90294_201009030027261305_2.jpg?"]
+           
 module.exports = (robot) ->
   robot.respond /あきらめたら$/, (msg) ->
     msg.send "http://imgcc.naver.jp/kaze/mission/USER/20130421/54/538664/0/408x304xda3c0d83c868e3e49c31723d.jpg"
@@ -85,5 +95,26 @@ module.exports = (robot) ->
 
   robot.respond /無駄な時間$/, (msg) ->
     msg.send "http://cdn-ak.f.st-hatena.com/images/fotolife/t/takashi0123/20100507/20100507231438.jpg"
+    
+  robot.hear /(.*)行く(.*)/i, (msg) ->
+    imageTiqav msg, "http://dg.galman.jp/img/001de_4136/%E8%A1%8C%E3%81%91%EF%BC%81%E7%A8%B2%E4%B8%AD%E5%8D%93%E7%90%83%E9%83%A8.gif?"
 
+  robot.hear /(.*)ずるい(.*)/i, (msg) ->
+    imageTiqav msg, "http://livedoor.blogimg.jp/nana_news/imgs/d/8/d833bce9.jpg?"
 
+  robot.hear /(.*)ぬる|Null|null(.*)/i, (msg) ->
+    imageTiqav msg, "http://www.sisimaru.com/media/1/20060221-SafariScreenSnapz003.jpg?"
+
+  robot.hear /(.*)言う(.*)/i, (msg) ->
+    imageTiqav msg, "http://livedoor.blogimg.jp/nana_news/imgs/9/b/9b3176a7.jpg?"
+
+  robot.hear /(.*)あ(|\s|、)つい(.*)|(.*)あつ(|\s|、)い(.*)|(.*)(h|H)(|\s|)ot(.*)|(.*)(h|H)o(|\s|)t(.*)/i, (msg) ->
+    imageTiqav msg, "http://userdisk.webry.biglobe.ne.jp/024/438/56/N000/000/003/137647364273113119254_hakusho02.jpg?"
+
+  robot.hear /(.*)ちくわ(.*)/i, (msg) ->
+    url = msg.random TIKUWA_URL
+    imageTiqav msg, url
+
+imageTiqav = (msg, drowUrl) ->
+  mrs = Math.random().toString()
+  msg.send drowUrl + mrs

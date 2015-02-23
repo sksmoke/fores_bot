@@ -235,16 +235,16 @@ CROP_LAST_GET_USER = 'crop-last-get-user'
 CROP_MAX_NUM = 20
 
 cron = require('cron').CronJob
-moment = require 'moment-timezone'
 
 module.exports = (robot) ->
     new cron '0 * * * * 1-5', () ->
-        rnd = Math.floor(Math.random() * 7200) + 1
-        cropAdventFlg = robot.brain.get CROP_ADVENT_FLG ? false
-        if rnd < 10 && cropAdventFlg == false
+        rnd = Math.floor(Math.random() * 2400) + 1
+        cropAdventFlg = robot.brain.get(CROP_ADVENT_FLG) ? false
+        if rnd < 5 && cropAdventFlg == false
             setCrop robot
         if rnd < 2 && cropAdventFlg == true
             endHarvestCrop robot
+    , null, true, 'Asia/Tokyo'
 
     robot.respond /sftes/i, (msg) ->
         setCrop robot
@@ -271,7 +271,7 @@ setCrop = (robot) ->
     robot.brain.set(CROP_REST_NUM, cropNum)
     robot.brain.set(CROP_MODIFIER_NO, cropModifierNo)
     robot.brain.set(CROP_TYPE_NO, cropTypeNo)
-    robot.send {room: '#bot_test'}, MODIFIER[cropModifierNo].name + CROP_TYPE[cropTypeNo].name + '(' + cropPrice + ' FOE)が、' + cropNum + '個収穫できるぞ！！'
+    robot.send {room: 'bot_test'}, MODIFIER[cropModifierNo].name + CROP_TYPE[cropTypeNo].name + '(' + cropPrice + ' FOE)が、' + cropNum + '個収穫できるぞ！！'
     
 # コマンドによる作物の収穫
 harvestCrop = (robot, msg) ->
@@ -279,7 +279,7 @@ harvestCrop = (robot, msg) ->
     uDesignation = robot.brain.get(uIndex + USER_DESIGNATION) ? 0
     getNum = DESIGNATION[uDesignation].rate + Math.floor(Math.random() * 2)
     cropNum = robot.brain.get(CROP_REST_NUM) ? 0
-    cropAdventFlg = robot.brain.get CROP_ADVENT_FLG ? false
+    cropAdventFlg = robot.brain.get(CROP_ADVENT_FLG) ? false
     if cropAdventFlg == true
         if cropNum - getNum < 0
             setUserPoint uIndex, cropNum, robot
@@ -287,14 +287,14 @@ harvestCrop = (robot, msg) ->
         else
             setUserPoint uIndex, getNum, robot
     else
-        robot.send {room: '#bot_test'}, 'まだ、収穫できないよ'
+        robot.send {room: 'bot_test'}, 'まだ、収穫できないよ'
 
 # 作物の収穫完了
 endHarvestCrop = (robot) ->
     cropModifierNo = robot.brain.get(CROP_MODIFIER_NO) ? 0
     cropTypeNo = robot.brain.get(CROP_TYPE_NO) ? 0
     robot.brain.set(CROP_ADVENT_FLG, false)
-    robot.send {room: '#bot_test'}, MODIFIER[cropModifierNo].name + CROP_TYPE[cropTypeNo].name + 'の収穫が終わりました。 :four_leaf_clover:'
+    robot.send {room: 'bot_test'}, MODIFIER[cropModifierNo].name + CROP_TYPE[cropTypeNo].name + 'の収穫が終わりました。 :four_leaf_clover:'
     
 
 # 収穫したポイントの設定
@@ -310,15 +310,15 @@ setUserPoint = (uIndex, getNum, robot) ->
         uPoint = robot.brain.get(uIndex + USER_POINT) ? 0
     
         robot.brain.set(CROP_REST_NUM, cropNum - getNum)
-        robot.brain.set CROP_LAST_GET_USER uIndex
+        robot.brain.set(CROP_LAST_GET_USER,uIndex)
         robot.brain.set(uIndex + USER_POINT, uPoint + Math.floor(getNum * cropPrice))
         
-        robot.send {room: '#bot_test'}, cropName + 'を、' + getNum + '個収穫しました。'
-        robot.send {room: '#bot_test'}, uIndex + 'が、' + Math.floor(getNum * cropPrice) + ' FOE取得しました。'
+        robot.send {room: 'bot_test'}, cropName + 'を、' + getNum + '個収穫しました。'
+        robot.send {room: 'bot_test'}, uIndex + 'が、' + Math.floor(getNum * cropPrice) + ' FOE取得しました。'
         checkCropStatus(robot)
         
     else
-        robot.send {room: '#bot_test'}, uIndex + 'は、続けて収穫できません。'
+        robot.send {room: 'bot_test'}, uIndex + 'は、続けて収穫できません。'
     
 
 # 自分のステータス確認
@@ -327,8 +327,8 @@ checkUserStatus = (robot, msg) ->
     uDesignation = robot.brain.get(uIndex + USER_DESIGNATION) ? 0
     uPoint = robot.brain.get(uIndex + USER_POINT) ? 0
 
-    robot.send {room: '#bot_test'}, uIndex + ':' + DESIGNATION[uDesignation].name
-    robot.send {room: '#bot_test'}, '　point:' + uPoint + ' FOE'
+    robot.send {room: 'bot_test'}, uIndex + ':' + DESIGNATION[uDesignation].name
+    robot.send {room: 'bot_test'}, '　point:' + uPoint + ' FOE'
 
 checkCropStatus = (robot) ->
     cropModifierNo = robot.brain.get(CROP_MODIFIER_NO) ? 0
@@ -337,8 +337,8 @@ checkCropStatus = (robot) ->
     cropNum = robot.brain.get(CROP_REST_NUM) ? 0
     cropAdventFlg = robot.brain.get CROP_ADVENT_FLG ? false
     if cropAdventFlg == true
-        robot.send {room: '#bot_test'}, cropName + 'は、残り' + cropNum + '個！'
+        robot.send {room: 'bot_test'}, cropName + 'は、残り' + cropNum + '個！'
     else
-        robot.send {room: '#bot_test'}, '収穫できる作物がないよ'
+        robot.send {room: 'bot_test'}, '収穫できる作物がないよ'
 
 # ランキング
