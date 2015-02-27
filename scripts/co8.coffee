@@ -14,5 +14,5 @@ module.exports = (robot) ->
           destName = msg?.match[1]
           for destUser in JSON.parse(body)?.destUsers
             if destUser?.name is destName
-              msg.reply "@#{msg.random destUser?.icons}＜#{msg.random destUser?.messages}"
+              msg.send "@#{msg.random destUser?.icons}＜#{msg.random destUser?.messages}"
               break
