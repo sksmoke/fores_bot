@@ -96,9 +96,6 @@ module.exports = (robot) ->
   robot.respond /無駄な時間$/, (msg) ->
     msg.send "http://cdn-ak.f.st-hatena.com/images/fotolife/t/takashi0123/20100507/20100507231438.jpg"
     
-  robot.hear /(.*)行く(.*)/i, (msg) ->
-    imageTiqav msg, "http://dg.galman.jp/img/001de_4136/%E8%A1%8C%E3%81%91%EF%BC%81%E7%A8%B2%E4%B8%AD%E5%8D%93%E7%90%83%E9%83%A8.gif?"
-
   robot.hear /(.*)ずるい(.*)/i, (msg) ->
     imageTiqav msg, "http://livedoor.blogimg.jp/nana_news/imgs/d/8/d833bce9.jpg?"
 
